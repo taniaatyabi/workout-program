@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strength &amp; Mobility</title>
+<meta name="description" content="12-week strength and mobility plan with a training log.">
+<meta name="theme-color" content="#1B211E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Strength">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">Strength &amp; Mobility</span>
+  <span class="weekchip" id="weekchip">Week 1</span>
+</header>
+
+<main id="main">
+  <!-- PLAN -->
+  <section class="view" id="view-plan" aria-labelledby="t-plan">
+    <h1 class="sr" id="t-plan">Plan</h1>
+    <div class="daytabs" role="tablist" aria-label="Session" id="daytabs"></div>
+    <div id="day"></div>
+  </section>
+
+  <!-- LOG -->
+  <section class="view" id="view-log" hidden aria-labelledby="t-log">
+    <div class="titlerow"><h1 id="t-log">Log a visit</h1><span id="edit-flag" class="pill teal" hidden>Editing a past visit</span></div>
+    <div class="stats">
+      <div class="stat"><b id="st-visits">0</b><span>visits logged</span></div>
+      <div class="stat"><b id="st-this">0 / 3</b><span>gym days this week</span></div>
+    </div>
+    <form id="form" class="card" novalidate>
+      <label class="field">Date<input type="date" id="visit-date" required></label>
+      <fieldset class="seg" id="seg">
+        <legend>Session</legend>
+        <label><input type="radio" name="session" id="s-A" value="A"><span><b>Day A</b>Lower</span></label>
+        <label><input type="radio" name="session" id="s-B" value="B"><span><b>Day B</b>Upper</span></label>
+        <label><input type="radio" name="session" id="s-C" value="C"><span><b>Day C</b>Full body</span></label>
+      </fieldset>
+      <p class="caption" id="form-week"></p>
+      <div class="exlist" id="exlist"></div>
+      <div class="ex">
+        <div class="exhead"><span class="check static"><span class="code teal">LISS</span><span id="cardio-name">Cardio</span></span></div>
+        <div class="fields"><label class="field">Minutes<input type="number" id="cardio-min" inputmode="numeric" min="0" step="1"></label></div>
+      </div>
+      <label class="field">Notes<textarea id="notes" placeholder="How it felt, seat settings, anything to remember"></textarea></label>
+      <p class="msg" id="form-msg" hidden></p>
+      <div class="btns">
+        <button type="submit" class="primary" id="save-btn">Save visit</button>
+        <button type="button" id="cancel-btn" hidden>Cancel edit</button>
+      </div>
+    </form>
+    <h2 class="sub">Past visits</h2>
+    <div class="visits" id="visits"></div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section class="view" id="view-progress" hidden aria-labelledby="t-prog">
+    <h1 id="t-prog">Progress</h1>
+    <div class="card">
+      <label class="field">Exercise<select id="ex-pick"></select></label>
+      <div id="verdict"></div>
+      <div class="chartbox" id="chartbox"></div>
+      <p class="caption" id="chart-cap"></p>
+      <details id="tbl-wrap"><summary>Show as a table</summary><div class="tablewrap" id="tbl"></div></details>
+    </div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="view" id="view-guide" hidden aria-labelledby="t-guide">
+    <h1 id="t-guide">Guide</h1>
+    <div id="guide"></div>
+    <div class="card">
+      <h2 class="sub">Your data</h2>
+      <p>Everything you log stays on this phone, inside this app. Nothing is uploaded anywhere. Make a backup every couple of weeks and save it to Files or iCloud Drive, because deleting the app from your home screen also deletes its data.</p>
+      <div class="btns">
+        <button type="button" id="export-btn">Back up my log</button>
+        <label class="filebtn">Restore a backup<input type="file" id="import-file" accept="application/json,.json"></label>
+      </div>
+      <p class="caption" id="data-msg"></p>
+    </div>
+    <p class="caption">General guidance for a healthy adult, not medical advice. Stop any exercise that causes sharp pain.</p>
+  </section>
+</main>
+
+<nav class="tabbar" aria-label="Main">
+  <button type="button" data-view="plan" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Plan</span></button>
+  <button type="button" data-view="log"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg><span>Log</span></button>
+  <button type="button" data-view="progress"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16"/><path d="M5 15l4-4 4 3 6-7"/></svg><span>Progress</span></button>
+  <button type="button" data-view="guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5z"/><path d="M9 9h6M9 13h4"/></svg><span>Guide</span></button>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/plan.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
